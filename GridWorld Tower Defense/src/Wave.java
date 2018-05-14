@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Wave {
+public class Wave implements Actor {
 
 	private ArrayList<WavePart> parts;
 	private int ticks;
@@ -21,5 +21,9 @@ public class Wave {
 				i--;
 			}
 		}
+	}
+	
+	public void act() {
+		ticks++;
 	}
 }
