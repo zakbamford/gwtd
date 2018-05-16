@@ -6,8 +6,8 @@ public class Wave implements Actor {
 	private int ticks;
 
 	// Constructs a wave of enemies consisting of different wave parts
-	public Wave(ArrayList<WavePart> p) {
-		parts = p;
+	public Wave(ArrayList<WavePart> parts) {
+		this.parts = parts;
 	}
 
 	// Spawns this wave
@@ -25,5 +25,9 @@ public class Wave implements Actor {
 	
 	public void act() {
 		ticks++;
+	}
+	
+	public int getTicks() {
+		return ticks;
 	}
 }

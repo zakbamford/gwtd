@@ -1,16 +1,17 @@
 public class WavePart {
 
-	//private Enemy enemyType; // the type of enemy in this wave part
+	private Enemy enemy; // the enemy to be spawned in this wave part
 	private int count; // the amount of enemies to be spawn
 	private int ticksBetweenSpawn; // the enemy spawn rate
 	private int startTime; // how far into the wave this wave part should start
-	private boolean startedSpawning; // whether this wave part has already
-										// started spawning
 
 	// Constructs a part of a wave with only one enemy type
-	//public WavePart(Enemy e, int c, int t, int s) {
-
-	//}
+	public WavePart(Enemy enemy, int count, int ticksBetweenSpawn, int startTime) {
+		this.enemy = enemy;
+		this.count = count;
+		this.ticksBetweenSpawn = ticksBetweenSpawn;
+		this.startTime = startTime;
+	}
 
 	// gets start time of this wave
 	public int getStartTime() {
@@ -19,6 +20,10 @@ public class WavePart {
 	
 	// spawns wave
 	public void spawn() {
-		//can't do this yet, needs other classes
+		Enemy e;
+		for (int i = 0; i < count; i++) {
+			e = new Enemy(enemy);
+			//spawn the enemy into track
+		}
 	}
 }
