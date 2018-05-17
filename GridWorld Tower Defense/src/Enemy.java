@@ -1,12 +1,11 @@
 import java.awt.Image;
 
-public class Enemy implements Actor {
+public class Enemy extends Entity implements Actor {
 
 	private int health;
-	private int x;
-	private int y;
 	private int dir;
 	private int speed;
+	private int trackStage;
 	private Enemy spawnOnDeath;
 	private Track track;
 	private Image img;
@@ -29,32 +28,12 @@ public class Enemy implements Actor {
 		move();
 	}
 
-	private void move() {
-		
-	}
-
 	public int getHealth() {
 		return health;
 	}
 
 	public void setHealth(int health) {
 		this.health = health;
-	}
-	
-	public int getX() {
-		return x;
-	}
-
-	public void setX(int x) {
-		this.x = x;
-	}
-
-	public int getY() {
-		return y;
-	}
-
-	public void setY(int y) {
-		this.y = y;
 	}
 
 	public int getDir() {
@@ -71,6 +50,14 @@ public class Enemy implements Actor {
 
 	public void setSpeed(int speed) {
 		this.speed = speed;
+	}
+
+	public int getTrackStage() {
+		return trackStage;
+	}
+
+	public void settrackStage(int getTrackStage) {
+		this.trackStage = getTrackStage;
 	}
 
 	public Enemy getSpawnOnDeath() {
@@ -95,5 +82,50 @@ public class Enemy implements Actor {
 
 	public void setImg(Image img) {
 		this.img = img;
+	}
+	
+	private void move() {
+		if (track.nextMoveIsValid(this)) {
+			moveUninterrupted();
+		} else {
+			moveInterrupted();
+		}
+	}
+	
+	private void moveUninterrupted() {
+		switch (dir) {
+		case 0:
+			y += speed;
+			break;
+		case 90:
+			x += speed;
+			break;
+		case 180:
+			y -= speed;
+			break;
+		case 270:
+			x -= speed;
+			break;
+		}
+	}
+	
+	private void moveInterrupted() {
+		int moves = track.movesLeftInSide(this);
+		int more = speed - moves;
+		switch (dir) {
+		case 0:
+			loc.setY(loc.getY() + moves);
+			break;
+		case 90:
+			x += moves;
+			break;
+		case 180:
+			y -= moves;
+			break;
+		case 270:
+			x -= moves;
+			break;
+		}
+		
 	}
 }

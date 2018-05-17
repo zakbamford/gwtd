@@ -1,4 +1,5 @@
 
-public abstract class Tower implements Actor {
-	private Location loc;
+public abstract class Tower extends Entity implements Actor {
+	public void act() {
+	}
 }

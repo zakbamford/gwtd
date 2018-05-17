@@ -16,6 +16,8 @@
  * @author Chris Nevison
  * @author APCS Development Committee
  * @author Cay Horstmann
+ * 
+ * Minor edits for GridWorld Tower Defense
  */
 
 /**
@@ -25,8 +27,8 @@
  */
 public class Location implements Comparable
 {
-    private int row; // row location in grid
-    private int col; // column location in grid
+    private int x; // column location in grid
+    private int y; // row location in grid
 
     /**
      * The turn angle for turning 90 degrees to the left.
@@ -92,34 +94,16 @@ public class Location implements Comparable
 
     /**
      * Constructs a location with given row and column coordinates.
-     * @param r the row
-     * @param c the column
+     * @param x the column
+     * @param y the row
      */
-    public Location(int r, int c)
+    public Location(int x, int y)
     {
-        row = r;
-        col = c;
+        this.x = x;
+    	this.y = y;
     }
 
-    /**
-     * Gets the row coordinate.
-     * @return the row of this location
-     */
-    public int getRow()
-    {
-        return row;
-    }
-
-    /**
-     * Gets the column coordinate.
-     * @return the column of this location
-     */
-    public int getCol()
-    {
-        return col;
-    }
-
-    /**
+	/**
      * Gets the adjacent location in any one of the eight compass directions.
      * @param direction the direction in which to find a neighbor location
      * @return the adjacent location in the direction that is closest to
@@ -163,7 +147,7 @@ public class Location implements Comparable
             dc = 1;
             dr = -1;
         }
-        return new Location(getRow() + dr, getCol() + dc);
+        return new Location(y + dr, x + dc);
     }
 
     /**
@@ -175,8 +159,8 @@ public class Location implements Comparable
      */
     public int getDirectionToward(Location target)
     {
-        int dx = target.getCol() - getCol();
-        int dy = target.getRow() - getRow();
+        int dx = target.getX() - getX();
+        int dy = target.getY() - getY();
         // y axis points opposite to mathematical orientation
         int angle = (int) Math.toDegrees(Math.atan2(-dy, dx));
 
@@ -206,7 +190,7 @@ public class Location implements Comparable
             return false;
 
         Location otherLoc = (Location) other;
-        return getRow() == otherLoc.getRow() && getCol() == otherLoc.getCol();
+        return y == otherLoc.getY() && x == otherLoc.getX();
     }
 
     /**
@@ -215,7 +199,7 @@ public class Location implements Comparable
      */
     public int hashCode()
     {
-        return getRow() * 3737 + getCol();
+        return y * 3737 + x;
     }
 
     /**
@@ -232,13 +216,13 @@ public class Location implements Comparable
     public int compareTo(Object other)
     {
         Location otherLoc = (Location) other;
-        if (getRow() < otherLoc.getRow())
+        if (y < otherLoc.getY())
             return -1;
-        if (getRow() > otherLoc.getRow())
+        if (y > otherLoc.getY())
             return 1;
-        if (getCol() < otherLoc.getCol())
+        if (x < otherLoc.getX())
             return -1;
-        if (getCol() > otherLoc.getCol())
+        if (x > otherLoc.getX())
             return 1;
         return 0;
     }
@@ -250,6 +234,22 @@ public class Location implements Comparable
      */
     public String toString()
     {
-        return "(" + getRow() + ", " + getCol() + ")";
+        return "(" + y + ", " + x + ")";
     }
+    
+    public int getX() {
+		return x;
+	}
+
+	public void setX(int x) {
+		this.x = x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+	public void setY(int y) {
+		this.y = y;
+	}
 }
