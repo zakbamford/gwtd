@@ -4,6 +4,10 @@ public abstract class Entity implements Actor {
 	
 	public void act() {
 	}
+	
+	public void removeSelfFromGrid() {
+		//to be completed later
+	}
 
 	public Location getLoc() {
 		return loc;

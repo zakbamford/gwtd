@@ -1,5 +1,6 @@
 
-public abstract class Tower extends Entity implements Actor {
-	public void act() {
-	}
+public abstract class Tower extends Entity {
+	protected int level;
+	protected int price;
+	protected int damage;
 }
