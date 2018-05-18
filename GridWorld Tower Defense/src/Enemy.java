@@ -9,16 +9,14 @@ public class Enemy extends Entity {
 	private int trackStage;
 	private Enemy spawnOnDeath;
 	private Image img;
-	private ArrayList<Location> path;
 
-	public Enemy(int health, int speed, Enemy spawnOnDeath, Image img, ArrayList<Location> path) {
+	public Enemy(int health, int speed, Enemy spawnOnDeath, Image img) {
 		this.health = health;
 		dir = 90;
 		this.speed = speed;
 		trackStage = 0;
 		this.spawnOnDeath = spawnOnDeath;
 		this.img = img;
-		this.setPath(path);
 	}
 
 	public Enemy(Enemy enemy) {
@@ -28,7 +26,6 @@ public class Enemy extends Entity {
 		trackStage = 0;
 		spawnOnDeath = enemy.getSpawnOnDeath();
 		img = enemy.getImg();
-		setPath(enemy.getPath());
 	}
 
 	public void act() {
@@ -87,15 +84,7 @@ public class Enemy extends Entity {
 	public void setImg(Image img) {
 		this.img = img;
 	}
-
-	public ArrayList<Location> getPath() {
-		return path;
-	}
-
-	public void setPath(ArrayList<Location> path) {
-		this.path = path;
-	}
-
+	
 	private void move() {
 		if (nextMoveIsValid()) {
 			moveUninterrupted();
@@ -166,7 +155,7 @@ public class Enemy extends Entity {
 	}
 
 	private boolean nextMoveIsValid() {
-		Location loc = path.get(trackStage);
+		Location loc = Path.path[trackStage];
 		int newCoord;
 		switch (dir) {
 		case 0:
@@ -198,7 +187,7 @@ public class Enemy extends Entity {
 	}
 
 	private int movesLeftInSide() {
-		Location loc = path.get(trackStage);
+		Location loc = Path.path[trackStage];
 		switch (dir) {
 		case 0:
 			return loc.getY() - loc.getY();
@@ -214,8 +203,7 @@ public class Enemy extends Entity {
 	}
 
 	private Location getNextLoc() {
-		int stage = trackStage + 1;
-		return path.get(stage);
+		return Path.path[trackStage + 1];
 	}
 
 	private boolean atEndOfTrack() {

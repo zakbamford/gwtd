@@ -14,11 +14,9 @@ public class Wave implements Actor {
 	// precondition: subwaves are sorted by spawn time
 	// postcondition: entire wave has been spawned
 	public void spawn() {
-		int i = 0;
-		while (i < parts.size()) {
+		for (int i = 0; i < parts.size(); i++) {
 			if (ticks == parts.get(i).getStartTime()) {
 				parts.get(i).spawn();
-				i++;
 			}
 		}
 	}
