@@ -9,14 +9,16 @@ public class Enemy extends Entity {
 	private int trackStage;
 	private Enemy spawnOnDeath;
 	private Image img;
+	private Player player;
 
-	public Enemy(int health, int speed, Enemy spawnOnDeath, Image img) {
+	public Enemy(int health, int speed, Enemy spawnOnDeath, Image img, Player player) {
 		this.health = health;
 		dir = 90;
 		this.speed = speed;
 		trackStage = 0;
 		this.spawnOnDeath = spawnOnDeath;
 		this.img = img;
+		this.setPlayer(player);
 	}
 
 	public Enemy(Enemy enemy) {
@@ -26,6 +28,7 @@ public class Enemy extends Entity {
 		trackStage = 0;
 		spawnOnDeath = enemy.getSpawnOnDeath();
 		img = enemy.getImg();
+		setPlayer(enemy.getPlayer());
 	}
 
 	public void act() {
@@ -85,6 +88,14 @@ public class Enemy extends Entity {
 		this.img = img;
 	}
 	
+	public Player getPlayer() {
+		return player;
+	}
+
+	public void setPlayer(Player player) {
+		this.player = player;
+	}
+
 	private void move() {
 		if (nextMoveIsValid()) {
 			moveUninterrupted();
@@ -146,7 +157,7 @@ public class Enemy extends Entity {
 
 	private void die() {
 		removeSelfFromGrid();
-		// need to give money to player here
+		
 	}
 
 	private void reachGoal() {
@@ -160,27 +171,23 @@ public class Enemy extends Entity {
 		switch (dir) {
 		case 0:
 			newCoord = loc.getY() + speed;
-			if (newCoord >= loc.getY()) {
+			if (newCoord >= loc.getY())
 				return false;
-			}
 			break;
 		case 90:
 			newCoord = loc.getX() + speed;
-			if (newCoord >= loc.getX()) {
+			if (newCoord >= loc.getX())
 				return false;
-			}
 			break;
 		case 180:
 			newCoord = loc.getY() - speed;
-			if (newCoord <= loc.getY()) {
+			if (newCoord <= loc.getY())
 				return false;
-			}
 			break;
 		case 270:
 			newCoord = loc.getX() - speed;
-			if (newCoord <= loc.getX()) {
+			if (newCoord <= loc.getX())
 				return false;
-			}
 			break;
 		}
 		return true;
@@ -207,7 +214,27 @@ public class Enemy extends Entity {
 	}
 
 	private boolean atEndOfTrack() {
-		// need to write this
-		return false;
+		int finalStage = Path.path.length - 1;
+		Location finalLoc = Path.path[finalStage];
+		if (trackStage != finalStage) {
+			return false;
+		} else {
+			switch (loc.getDirectionToward(finalLoc)) {
+			case 0:
+				if (loc.getY() >= finalLoc.getY())
+					return true;
+				break;
+			case 90:
+				if (loc.getX() >= finalLoc.getX())
+					return true;
+			case 180:
+				if (loc.getY() <= finalLoc.getY())
+					return true;
+			case 270:
+				if (loc.getX() <= finalLoc.getX())
+					return true;
+			}
+			return false;
+		}
 	}
 }

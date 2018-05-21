@@ -27,7 +27,7 @@ public class WavePart implements Actor {
 	public void spawn() {
 		for (int i = 0; i < count; i++) {
 			if (ticksSinceSpawn == ticksBetweenSpawn) {
-				//grid.add(new Enemy(enemy)); or whatever this code should be 
+				grid.add(Path.)
 				ticksSinceSpawn = 0;
 			}
 		}

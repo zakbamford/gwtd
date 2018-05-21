@@ -1,12 +1,13 @@
 
 public abstract class Entity implements Actor {
 	protected Location loc;
+	protected Grid grid;
 	
 	public void act() {
 	}
 	
 	public void removeSelfFromGrid() {
-		//to be completed later
+		grid.remove(loc.getY(), loc.getX());
 	}
 
 	public Location getLoc() {
