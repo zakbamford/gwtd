@@ -14,8 +14,8 @@ public class World {
 		enemies.add(enemy);
 	}
 	
-	public void setEnemies(ArrayList<Enemy> enemies) {
-		this.enemies = enemies;
+	public ArrayList<Enemy> getEnemies() {
+		return enemies;
 	}
 
 	public Grid getGrid() {

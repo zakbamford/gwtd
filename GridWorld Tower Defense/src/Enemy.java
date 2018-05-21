@@ -156,13 +156,13 @@ public class Enemy extends Entity {
 	}
 
 	private void die() {
+		player.giveMoney();
 		removeSelfFromGrid();
-		
 	}
 
 	private void reachGoal() {
+		player.takeLives();
 		removeSelfFromGrid();
-		// need to take lives from player here
 	}
 
 	private boolean nextMoveIsValid() {
