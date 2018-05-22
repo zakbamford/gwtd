@@ -13,8 +13,7 @@ public class GuiMain extends JFrame implements ActionListener
  private JRadioButton ubertower;
  private JButton startwave;
  private JTextArea towerinfo;
- private JButton[][] grid = new JButton[20][30];
- private JPanel gridpanel;
+ private JPanel gamepanel;
  private JPanel buttonpanel;
  private JLabel logo;
  public GuiMain()
@@ -51,19 +50,8 @@ public class GuiMain extends JFrame implements ActionListener
 	 
 	 towerinfo = new JTextArea(10, 15);
 	 add(towerinfo, BorderLayout.WEST);
-	 gridpanel = new JPanel();
-	 gridpanel.setLayout(new GridLayout(20, 30));
-	 //GIVE CREDIT TO RDONUK (stackoverflow.com) FOR HELP WITH THE GUI
-	 for(int i = 0; i < 20; i++)
-	 {
-	   for(int j = 0; j < 30; j++)
-	   {
-		   grid[i][j] = new JButton("X");
-		   grid[i][j].setBackground(Color.green);
-		   gridpanel.add(grid[i][j]);
-	   }
-	 }
-	 add(gridpanel, BorderLayout.CENTER);
+	 gamepanel = new GamePanel();
+	 add(gamepanel, BorderLayout.CENTER);
 	 //Add the tiles later
 	 //Figure out how to add it to the border layout
 	 
