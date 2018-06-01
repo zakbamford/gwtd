@@ -9,7 +9,7 @@ public class Wave implements Actor {
 	public Wave(ArrayList<WavePart> parts) {
 		this.parts = parts;
 	}
-	
+
 	// Spawns this wave
 	// precondition: subwaves are sorted by spawn time
 	// postcondition: entire wave has been spawned
@@ -20,7 +20,15 @@ public class Wave implements Actor {
 			}
 		}
 	}
-	
+
+	public boolean isDone() {
+		for (WavePart p : parts) {
+			if (!p.isDone())
+				return false;
+		}
+		return true;
+	}
+
 	public void act() {
 		ticks++;
 	}

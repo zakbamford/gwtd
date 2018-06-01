@@ -106,6 +106,10 @@ public class World {
 
 	}
 
+	public boolean waveIsDone() {
+		return waves.get(wave).isDone();
+	}
+	
 	public void spawnNextWave() {
 		waves.get(wave).spawn();
 	}

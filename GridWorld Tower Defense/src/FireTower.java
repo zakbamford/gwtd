@@ -2,17 +2,22 @@ import java.util.ArrayList;
 
 public class FireTower extends Tower {
 
-	private int range;
-	private int damage;
-	private int fireRate;
-	private double cost;
-
 	public FireTower() {
 		damage = 8;
 		fireRate = 1; // per second
 		range = 6;
 		cost = 1000;
 
+	}
+
+	public ArrayList<Enemy> getEnemies() {
+		ArrayList<Enemy> enemies = world.getEnemies();
+		ArrayList<Enemy> inRange = new ArrayList<Enemy>();
+		for (Enemy e : enemies) {
+			if (e.getLoc().distanceTo(loc) <= (range * Constants.PIXELS_PER_SQUARE))
+				inRange.add(e);
+		}
+		return inRange;
 	}
 
 	public void attack() {
@@ -33,6 +38,12 @@ public class FireTower extends Tower {
 			a.get(i).setHealth(damageHealth);
 
 		}
+	}
+
+	@Override
+	public void attack(ArrayList<Enemy> enemies) {
+		// TODO Auto-generated method stub
+
 	}
 
 }

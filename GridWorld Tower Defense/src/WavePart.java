@@ -4,6 +4,7 @@ public class WavePart implements Actor {
 	private int ticksBetweenSpawn; // the enemy spawn rate
 	private int ticksSinceSpawn; // how long since the last enemy was spawned
 	private int startTime; // how far into the wave this wave part should start
+	private int spawned; //the amount of enemies that have been spawned so far
 	private Enemy enemy; // the enemy to be spawned in this wave part
 	private World world; //the world in which to spawn this enemy
 
@@ -12,6 +13,7 @@ public class WavePart implements Actor {
 		this.count = count;
 		this.ticksBetweenSpawn = ticksBetweenSpawn;
 		this.startTime = startTime;
+		spawned = 0;
 		this.enemy = enemy;
 		this.world = world;
 	}
@@ -27,13 +29,16 @@ public class WavePart implements Actor {
 
 	// spawns wave
 	public void spawn() {
-		int i = 0;
-		while (i < count) {
+		while (spawned < count) {
 			if (ticksSinceSpawn == ticksBetweenSpawn) {
 				world.addEnemy(enemy);
 				ticksSinceSpawn = 0;
-				i++;
+				spawned++;
 			}
 		}
+	}
+	
+	public boolean isDone() {
+		return (spawned >= count);
 	}
 }

@@ -31,6 +31,7 @@ public class GuiMain extends JFrame {
 	private GamePanel gamepanel;
 	private Player player;
 	private Timer timer;
+	private ImageLoader loader;
 
 	// private ImageLoader loader;
 
@@ -53,7 +54,7 @@ public class GuiMain extends JFrame {
 		getinfo = new JButton("Get info of selected tower");
 		invisiblebutton = new JRadioButton();
 		gamepanel = new GamePanel();
-		// loader = new ImageLoader();
+		loader = new ImageLoader();
 		ButtonHandler buttonHandler = new ButtonHandler();
 		ButtonGroup buttons = new ButtonGroup();
 		buttons.add(tower);
@@ -117,9 +118,11 @@ public class GuiMain extends JFrame {
 	private class ButtonHandler implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() == startwave) {
+				System.err.println("Timer started");
 				timer = new Timer(20, this);
 				player.getWorld().spawnNextWave();
 			} else if (e.getSource() == timer) {
+				System.err.println("timer tick");
 				gamepanel.updateUI();
 				for (Enemy en : player.getWorld().getEnemies()) {
 					en.act();
@@ -128,6 +131,8 @@ public class GuiMain extends JFrame {
 					for (int j = 0; j < Constants.GRID_Y; j++)
 						player.getWorld().getGrid().get(i, j).act();
 				}
+				if (player.getWorld().waveIsDone())
+					timer.stop();
 			} else {
 				for (int r = 0; r < 20; r++) {
 					for (int c = 0; c < 30; c++) {
