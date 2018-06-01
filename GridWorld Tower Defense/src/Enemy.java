@@ -1,5 +1,4 @@
 import java.awt.Image;
-import java.util.ArrayList;
 
 public class Enemy extends Entity {
 
@@ -8,17 +7,16 @@ public class Enemy extends Entity {
 	private int speed;
 	private int trackStage;
 	private Enemy spawnOnDeath;
-	private Image img;
-	private Player player;
 
-	public Enemy(int health, int speed, Enemy spawnOnDeath, Image img, Player player) {
+	public Enemy(int health, int speed, Enemy spawnOnDeath, Image img, World world) {
 		this.health = health;
 		dir = 90;
 		this.speed = speed;
 		trackStage = 0;
 		this.spawnOnDeath = spawnOnDeath;
 		this.img = img;
-		this.setPlayer(player);
+		this.world = world;
+		this.loc = new Location(100, 100);
 	}
 
 	public Enemy(Enemy enemy) {
@@ -27,8 +25,9 @@ public class Enemy extends Entity {
 		speed = enemy.getSpeed();
 		trackStage = 0;
 		spawnOnDeath = enemy.getSpawnOnDeath();
-		img = enemy.getImg();
-		setPlayer(enemy.getPlayer());
+		img = enemy.getImage();
+		player = enemy.getPlayer();
+		world = enemy.getWorld();
 	}
 
 	public void act() {
@@ -78,22 +77,6 @@ public class Enemy extends Entity {
 
 	public void setSpawnOnDeath(Enemy spawnOnDeath) {
 		this.spawnOnDeath = spawnOnDeath;
-	}
-
-	public Image getImg() {
-		return img;
-	}
-
-	public void setImg(Image img) {
-		this.img = img;
-	}
-	
-	public Player getPlayer() {
-		return player;
-	}
-
-	public void setPlayer(Player player) {
-		this.player = player;
 	}
 
 	private void move() {
@@ -166,7 +149,7 @@ public class Enemy extends Entity {
 	}
 
 	private boolean nextMoveIsValid() {
-		Location loc = Path.path[trackStage];
+		Location loc = player.getWorld().getPath().get(trackStage);
 		int newCoord;
 		switch (dir) {
 		case 0:
@@ -194,7 +177,7 @@ public class Enemy extends Entity {
 	}
 
 	private int movesLeftInSide() {
-		Location loc = Path.path[trackStage];
+		Location loc = player.getWorld().getPath().get(trackStage);
 		switch (dir) {
 		case 0:
 			return loc.getY() - loc.getY();
@@ -210,12 +193,12 @@ public class Enemy extends Entity {
 	}
 
 	private Location getNextLoc() {
-		return Path.path[trackStage + 1];
+		return player.getWorld().getPath().get(trackStage + 1);
 	}
 
 	private boolean atEndOfTrack() {
-		int finalStage = Path.path.length - 1;
-		Location finalLoc = Path.path[finalStage];
+		int finalStage = player.getWorld().getPath().length() - 1;
+		Location finalLoc = player.getWorld().getPath().get(finalStage);
 		if (trackStage != finalStage) {
 			return false;
 		} else {

@@ -226,6 +226,12 @@ public class Location implements Comparable
             return 1;
         return 0;
     }
+    
+    public int distanceTo(Location enemyLoc) {
+    	double pixelX = x * Constants.PIXELS_PER_SQUARE;
+    	double pixelY = y * Constants.PIXELS_PER_SQUARE;
+    	return (int) Math.sqrt(Math.pow(pixelX, 2) + Math.pow(pixelY, 2));
+    }
 
     /**
      * Creates a string that describes this location.

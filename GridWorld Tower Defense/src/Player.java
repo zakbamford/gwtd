@@ -1,10 +1,17 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Scanner;
+
 public class Player {
 	private int money;
 	private int lives;
+	private World world;
 
-	public Player(int m, int l) {
-		money = m;
-		lives = l;
+	public Player() {
+		money = 100;
+		lives = 100;
+		world = new World();
 	}
 
 	public int getMoney() {
@@ -18,9 +25,13 @@ public class Player {
 	public void giveMoney() {
 		money += 10;
 	}
-	
+
 	public void takeLives() {
 		lives--;
+	}
+
+	public World getWorld() {
+		return world;
 	}
 
 	public void purchase(BasicTower t) {
