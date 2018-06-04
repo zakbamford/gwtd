@@ -106,10 +106,14 @@ public class World {
 
 	}
 
+	public int getCurrentWave() {
+		return wave;
+	}
+
 	public boolean waveIsDone() {
 		return waves.get(wave).isDone();
 	}
-	
+
 	public void spawnNextWave() {
 		waves.get(wave).spawn();
 	}
@@ -128,6 +132,10 @@ public class World {
 
 	public void setEnemyList(ArrayList<Enemy> enemyList) {
 		this.enemyList = enemyList;
+	}
+
+	public Wave getWave(int num) {
+		return waves.get(num);
 	}
 
 	public boolean addEntity(int x, int y, Entity entity) {

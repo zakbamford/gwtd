@@ -6,8 +6,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
+import java.io.File;
 
+import javax.imageio.ImageIO;
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -32,6 +35,8 @@ public class GuiMain extends JFrame {
 	private Player player;
 	private Timer timer;
 	private ImageLoader loader;
+	private ImageIcon img;
+	private BufferedImage image;
 
 	// private ImageLoader loader;
 
@@ -86,6 +91,12 @@ public class GuiMain extends JFrame {
 		playerinfo.setEditable(false);
 		// Adding the button panel to a panel that stores everything
 		add(buttonpanel, BorderLayout.EAST);
+		try {
+			image = ImageIO.read(new File("C:\\f\\Bug.gif"));
+			img = new ImageIcon(image);
+		} catch (Exception ex) {
+			System.out.println(ex);
+		}
 
 		add(towerinfo, BorderLayout.WEST);
 		gamepanel = new GamePanel();
@@ -102,7 +113,6 @@ public class GuiMain extends JFrame {
 
 		for (Location l : player.getWorld().getPath().getFullPath())
 			grid[l.getY()][l.getX()].setBackground(Color.YELLOW);
-
 		add(gamepanel, BorderLayout.CENTER);
 		// Add the tiles later
 		// Figure out how to add it to the border layout
@@ -116,27 +126,30 @@ public class GuiMain extends JFrame {
 	}
 
 	private class ButtonHandler implements ActionListener {
-		public void actionPerformed(ActionEvent e) {
-			if (e.getSource() == startwave) {
-				System.err.println("Timer started");
+		public void actionPerformed(ActionEvent en) {
+
+			if (en.getSource() == startwave) {
 				timer = new Timer(20, this);
+				timer.start();
 				player.getWorld().spawnNextWave();
-			} else if (e.getSource() == timer) {
-				System.err.println("timer tick");
+
+			} else if (en.getSource() == timer) {
+				Constants.TIME++;
+				System.out.println(Constants.TIME);
 				gamepanel.updateUI();
-				for (Enemy en : player.getWorld().getEnemies()) {
-					en.act();
+				for (Enemy ene : player.getWorld().getEnemies()) {
+					ene.act();
 				}
 				for (int i = 0; i < Constants.GRID_X; i++) {
-					for (int j = 0; j < Constants.GRID_Y; j++)
-						player.getWorld().getGrid().get(i, j).act();
+					//for (int j = 0; j < Constants.GRID_Y; j++)
+						//player.getWorld().getGrid().get(i, j).act();
 				}
 				if (player.getWorld().waveIsDone())
 					timer.stop();
 			} else {
 				for (int r = 0; r < 20; r++) {
 					for (int c = 0; c < 30; c++) {
-						if (e.getSource() == grid[r][c]) {
+						if (en.getSource() == grid[r][c]) {
 							System.out.println("Button at [" + r + ", " + c
 									+ "] pressed.");
 							if (tower.isSelected()
@@ -168,7 +181,7 @@ public class GuiMain extends JFrame {
 					}
 				}
 			}
-			if (e.getSource() == getinfo) {
+			if (en.getSource() == getinfo) {
 				if (tower.isSelected()) {
 					towerinfo
 							.setText("Basic Tower. \n The most basic tower in the game \n Shoots lazers at the enemies. \n Damage: 10 \n Fire Rate: 1 ammo per second \n Range: 1 space in any direction \n COST: 200");
@@ -196,10 +209,12 @@ public class GuiMain extends JFrame {
 	class GamePanel extends JPanel {
 		// this needs to be worked on
 		public void paint(Graphics g) {
+			// Draw Swing components first
 			super.paint(g);
 			for (Enemy e : player.getWorld().getEnemies()) {
-				g.drawImage(e.getImage(), e.getLoc().getX(), e.getLoc().getY(),
-						this);
+				//System.out.println(e);
+				//g.drawImage(e.getImage(), e.getLoc().getX(), e.getLoc().getY(),
+						//this);
 			}
 		}
 	}

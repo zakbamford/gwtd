@@ -8,7 +8,8 @@ public class Enemy extends Entity {
 	private int trackStage;
 	private Enemy spawnOnDeath;
 
-	public Enemy(int health, int speed, Enemy spawnOnDeath, Image img, World world) {
+	public Enemy(int health, int speed, Enemy spawnOnDeath, Image img,
+			World world) {
 		this.health = health;
 		dir = 90;
 		this.speed = speed;
@@ -31,12 +32,12 @@ public class Enemy extends Entity {
 	}
 
 	public void act() {
-		if (health <= 0)
+		/*if (health <= 0)
 			die();
 		else if (atEndOfTrack())
 			reachGoal();
 		else
-			move();
+			move();*/
 	}
 
 	public int getHealth() {

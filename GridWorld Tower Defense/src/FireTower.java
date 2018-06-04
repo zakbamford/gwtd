@@ -20,30 +20,10 @@ public class FireTower extends Tower {
 		return inRange;
 	}
 
-	public void attack() {
-		ArrayList<Location> locs = grid.getOccupiedAdjacentLocations(loc);
-
-		ArrayList<Enemy> a = new ArrayList<Enemy>();
-
-		for (int k = 0; k < gr.size(); k++) {
-			if (getGrid().get(gr.get(k)) instanceof Enemy) {
-				a.add((Enemy) (getGrid().get(gr.get(k))));
-			}
-
-		}
-
-		for (int i = 0; i < a.size(); i++) {
-			// decrease health of enemy based on damage
-			int damageHealth = a.get(i).getHealth() - damage;
-			a.get(i).setHealth(damageHealth);
-
-		}
-	}
-
-	@Override
 	public void attack(ArrayList<Enemy> enemies) {
-		// TODO Auto-generated method stub
-
+		for (Enemy e : enemies) {
+			e.setHealth(e.getHealth() - damage);
+		}
 	}
 
 }

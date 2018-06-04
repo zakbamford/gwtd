@@ -2,11 +2,12 @@ import java.util.ArrayList;
 
 public class BasicTower extends Tower {
 
-	public BasicTower() {
+	public BasicTower(Location loc) {
 		damage = 10;
 		fireRate = 1;
 		range = 8;
 		cost = 200;
+		this.loc = loc;
 	}
 
 	public ArrayList<Enemy> getEnemies() {

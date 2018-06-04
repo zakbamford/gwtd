@@ -21,8 +21,8 @@ public class ImageLoader {
 		// cldr.getResource("https://www.pinterest.com.au/pin/302937512416993831/"));
 		// UberTower = new ImageIcon(
 		// cldr.getResource("https://graphicriver.net/item/isometric-tower-defense-game-kit-3-of-3-w-character-sprites-more/16901853"));
-		//Enemy = new ImageIcon(
-				//cldr.getResource("Resources\\Bug.gif"));
+		// /Enemy = new ImageIcon(
+		// cldr.getResource("Resources\\Bug.gif"));
 	}
 
 	public ImageIcon getBasic() {

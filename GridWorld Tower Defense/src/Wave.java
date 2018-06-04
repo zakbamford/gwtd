@@ -1,9 +1,8 @@
 import java.util.ArrayList;
 
-public class Wave implements Actor {
+public class Wave {
 
 	private ArrayList<WavePart> parts;
-	private int ticks;
 
 	// Constructs a wave of enemies consisting of different wave parts
 	public Wave(ArrayList<WavePart> parts) {
@@ -14,9 +13,13 @@ public class Wave implements Actor {
 	// precondition: subwaves are sorted by spawn time
 	// postcondition: entire wave has been spawned
 	public void spawn() {
-		for (int i = 0; i < parts.size(); i++) {
-			if (ticks == parts.get(i).getStartTime()) {
+
+		System.out.println("Spawning, parts.size = " + parts.size());
+		int i = 0;
+		while (i < parts.size()) {
+			if (parts.get(i).getStartTime() == Constants.TIME) {
 				parts.get(i).spawn();
+				i++;
 			}
 		}
 	}
@@ -27,9 +30,5 @@ public class Wave implements Actor {
 				return false;
 		}
 		return true;
-	}
-
-	public void act() {
-		ticks++;
 	}
 }
