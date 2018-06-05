@@ -1,4 +1,5 @@
-import javax.swing.ImageIcon;
+import javax.swing.*;
+import java.net.URL;
 
 public class ImageLoader {
 
@@ -7,22 +8,40 @@ public class ImageLoader {
 	private ImageIcon IceTower;
 	private ImageIcon SniperTower;
 	private ImageIcon UberTower;
-	private ImageIcon Enemy;
+	private ImageIcon redBug;
+	private ImageIcon blueBug;
+	private ImageIcon greenBug;
+	private ImageIcon yellowBug;
+	private ImageIcon pinkBug;
+	private ImageIcon purpleBug;
+	private ImageIcon orangeBug;
 
 	public ImageLoader() {
 		ClassLoader cldr = this.getClass().getClassLoader();
-		// BasicTower = new ImageIcon(
-		// cldr.getResource("https://gfycat.com/gifs/search/tower+defense"));
-		// FireTower = new ImageIcon(
-		// cldr.getResource("https://gfycat.com/gifs/detail/DistantJoyfulCrane"));
-		// IceTower = new ImageIcon(
-		// cldr.getResource("https://mobilegamegraphics.com/product/isometric-tower-defense-assets/isometric-ice-frozen-tower-defense/"));
-		// SniperTower = new ImageIcon(
-		// cldr.getResource("https://www.pinterest.com.au/pin/302937512416993831/"));
-		// UberTower = new ImageIcon(
-		// cldr.getResource("https://graphicriver.net/item/isometric-tower-defense-game-kit-3-of-3-w-character-sprites-more/16901853"));
-		// /Enemy = new ImageIcon(
-		// cldr.getResource("Resources\\Bug.gif"));
+		BasicTower = new ImageIcon(
+				cldr.getResource("resources/Towers/BasicTower.png"));
+		FireTower = new ImageIcon(
+				cldr.getResource("resources/Towers/FireTower.png"));
+		IceTower = new ImageIcon(
+				cldr.getResource("resources/Towers/IceTower.png"));
+		SniperTower = new ImageIcon(
+				cldr.getResource("resources/Towers/SniperTower.png"));
+		UberTower = new ImageIcon(
+				cldr.getResource("resources/Towers/UberTower.png"));
+		redBug = new ImageIcon(
+				cldr.getResource("resources/Enemies/RedBug.png"));
+		blueBug = new ImageIcon(
+				cldr.getResource("resources/Enemies/BlueBug.png"));
+		greenBug = new ImageIcon(
+				cldr.getResource("resources/Enemies/GreenBug.png"));
+		yellowBug = new ImageIcon(
+				cldr.getResource("resources/Enemies/YellowBug.png"));
+		pinkBug = new ImageIcon(
+				cldr.getResource("resources/Enemies/PinkBug.png"));
+		purpleBug = new ImageIcon(
+				cldr.getResource("resources/Enemies/PurpleBug.png"));
+		orangeBug = new ImageIcon(
+				cldr.getResource("resources/Enemies/OrangeBug.png"));
 	}
 
 	public ImageIcon getBasic() {

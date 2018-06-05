@@ -12,7 +12,6 @@ public class World {
 	private ArrayList<Wave> waves;
 	private Grid grid;
 	private Path path;
-	private BufferedImage re
 
 	public World() {
 		wave = 0;
@@ -29,16 +28,12 @@ public class World {
 			// read in images
 			BufferedImage img = ImageIO.read(new File("H:\\APCS\\RedBug.png"));
 			// add enemies to enemy list
-			enemyList.add(new Enemy(10, 10, null, img, null));
+			enemyList.add(new Enemy(10, 10, null, img, this));
 		} catch (IOException e) {
 			System.err
 					.println("Some or all resources not found, exiting game.");
 			System.exit(0);
 		}
-	}
-	
-	private void initEnemies() {
-		
 	}
 
 	private void initTrack() {
