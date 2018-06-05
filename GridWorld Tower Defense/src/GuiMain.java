@@ -46,6 +46,7 @@ public class GuiMain extends JFrame {
 
 	public GuiMain(Player player) {
 		super("Tower Defense");
+		player.getWorld().initEnemies();
 		setResizable(false);
 		towerinfo.setText(
 				"Welcome to GridWorld Defense! \n How to play: \n Build towers to kill enemies. \n Don't let the enemies get \n to your base. \n If you lose all your health, \n then it's game over for you. \n Good Luck!");

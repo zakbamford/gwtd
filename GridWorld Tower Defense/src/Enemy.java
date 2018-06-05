@@ -214,9 +214,7 @@ public class Enemy extends Entity {
 	}
 
 	private boolean atEndOfTrack() {
-
-		int finalStage = world.getPath().getFullGridPath().size() - 1;
-		System.out.println(finalStage);
+		int finalStage = world.getPath().getFullPixelPath().size() - 1;
 		Location finalLoc = world.getPath().getPixel(finalStage);
 		if (trackStage != finalStage) {
 			return false;
@@ -237,7 +235,6 @@ public class Enemy extends Entity {
 					return true;
 			}
 		}
-
 		return false;
 	}
 
