@@ -25,7 +25,8 @@ public class WavePart {
 
 	// spawns wave
 	public void spawn() {
-		int i = 0;
+	System.out.println("spawning");
+		/*	int i = 0;
 		int tempTime = Constants.TIME;
 		while (i < count) {
 			if (tempTime <= Constants.TIME)
@@ -37,8 +38,9 @@ public class WavePart {
 				i++;
 				tempTime++;
 			}
-		}
-		System.out.println("Spawned " + spawned + " Count " + count);
+		
+		*/System.out.println("Spawned " + spawned + " Count " + count);
+		world.addEnemy(new Enemy(enemy));
 	}
 
 	public boolean isDone() {

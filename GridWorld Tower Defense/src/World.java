@@ -29,7 +29,7 @@ public class World {
 			// read in images
 			BufferedImage img = ImageIO.read(new File("H:\\APCS\\Bug.gif"));
 			// add enemies to enemy list
-			enemyList.add(new Enemy(10, 5, null, img, this));
+			enemyList.add(new Enemy(10, 10, null, img, this));
 		} catch (IOException e) {
 			System.err
 					.println("Some or all resources not found, exiting game.");
@@ -66,7 +66,7 @@ public class World {
 
 	private void initWave1() {
 		ArrayList<WavePart> parts = new ArrayList<WavePart>();
-		parts.add(new WavePart(10, 25, 0, enemyList.get(0), this));
+		parts.add(new WavePart(1, 25, 0, enemyList.get(0), this));
 		waves.add(new Wave(parts));
 	}
 

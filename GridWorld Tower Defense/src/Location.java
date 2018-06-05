@@ -167,13 +167,13 @@ public class Location implements Comparable
         // mathematical angle is counterclockwise from x-axis,
         // compass angle is clockwise from y-axis
         int compassAngle = RIGHT - angle;
-        // prepare for truncating division by 45 degrees
-        compassAngle += HALF_RIGHT / 2;
+        // prepare for truncating division by 90 degrees
+        compassAngle += HALF_RIGHT;
         // wrap negative angles
         if (compassAngle < 0)
             compassAngle += FULL_CIRCLE;
-        // round to nearest multiple of 45
-        return (compassAngle / HALF_RIGHT) * HALF_RIGHT;
+        // round to nearest multiple of 90
+        return (compassAngle / RIGHT) * RIGHT;
     }
 
     /**
@@ -240,7 +240,7 @@ public class Location implements Comparable
      */
     public String toString()
     {
-        return "(" + y + ", " + x + ")";
+        return "(" + x + ", " + y + ")";
     }
     
     public int getX() {

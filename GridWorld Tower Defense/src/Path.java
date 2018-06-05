@@ -31,18 +31,28 @@ public class Path {
 
 		}
 		pixelPath = new ArrayList<Location>();
-		for (Location l : gridPath) {
-			pixelPath.add(new Location((l.getX() * Constants.PIXELS_PER_SQUARE), (l
-					.getY() * Constants.PIXELS_PER_SQUARE)));
+		for (Location l : path) {
+			// Use actual JButton size to get translation correct
+			pixelPath.add(new Location((l.getX() * Constants.PIXELS_PER_SQUARE_HORIZ), (l.getY() * Constants.PIXELS_PER_SQUARE_VERT)));
+				//	new Location((l.getX() * Constants.PIXELS_PER_SQUARE), (l.getY() * Constants.PIXELS_PER_SQUARE)));
 		}
+		System.out.println("Pixel path = " + pixelPath);
 	}
 
-	public Location get(int stage) {
+	public Location getGrid(int stage) {
 		return gridPath.get(stage);
 	}
 
-	public ArrayList<Location> getFullPath() {
+	public ArrayList<Location> getFullGridPath() {
 		return gridPath;
+	}
+
+	public Location getPixel(int stage) {
+		return pixelPath.get(stage);
+	}
+
+	public ArrayList<Location> getFullPixelPath() {
+		return pixelPath;
 	}
 
 	public int length() {

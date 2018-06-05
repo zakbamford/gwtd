@@ -13,11 +13,11 @@ public class Enemy extends Entity {
 		this.health = health;
 		dir = 90;
 		this.speed = speed;
-		trackStage = 0;
+		trackStage = 1;
 		this.spawnOnDeath = spawnOnDeath;
 		this.img = img;
 		this.world = world;
-		this.loc = new Location(100, 100);
+		this.loc = new Location(0, 8 * Constants.PIXELS_PER_SQUARE_VERT);
 	}
 
 	public Enemy(Enemy enemy) {
@@ -29,15 +29,17 @@ public class Enemy extends Entity {
 		img = enemy.getImage();
 		player = enemy.getPlayer();
 		world = enemy.getWorld();
+		loc = enemy.getLoc();
 	}
 
 	public void act() {
-		/*if (health <= 0)
+		if (health <= 0)
 			die();
 		else if (atEndOfTrack())
 			reachGoal();
 		else
-			move();*/
+			move();
+
 	}
 
 	public int getHealth() {
@@ -82,22 +84,27 @@ public class Enemy extends Entity {
 
 	private void move() {
 		if (nextMoveIsValid()) {
+			// System.out.println("Move is valid");
 			moveUninterrupted();
 		} else {
 			moveInterrupted();
+			// System.out.println("Move is invalid");
 		}
 	}
 
 	private void moveUninterrupted() {
+
+		System.out.println("dir = " + dir);
+
 		switch (dir) {
 		case 0:
-			loc.setY(loc.getY() + speed);
+			loc.setY(loc.getY() - speed);
 			break;
 		case 90:
 			loc.setX(loc.getX() + speed);
 			break;
 		case 180:
-			loc.setY(loc.getY() - speed);
+			loc.setY(loc.getY() + speed);
 			break;
 		case 270:
 			loc.setX(loc.getX() - speed);
@@ -106,37 +113,40 @@ public class Enemy extends Entity {
 	}
 
 	private void moveInterrupted() {
+		System.out.println("dir = " + dir);
 		int moves = movesLeftInSide();
+		System.out.println("Moves left = " + moves);
 		int more = speed - moves;
 		switch (dir) {
 		case 0:
-			loc.setY(loc.getY() + moves);
+			loc.setY(loc.getY() - moves);
 			break;
 		case 90:
 			loc.setX(loc.getX() + moves);
 			break;
 		case 180:
-			loc.setY(loc.getY() - moves);
+			loc.setY(loc.getY() + moves);
 			break;
 		case 270:
-			loc.setY(loc.getY() + moves);
+			loc.setX(loc.getX() - moves);
 			break;
 		}
 		dir = loc.getDirectionToward(getNextLoc());
 		switch (dir) {
 		case 0:
-			loc.setY(loc.getY() + more);
+			loc.setY(loc.getY() - more);
 			break;
 		case 90:
 			loc.setX(loc.getX() + more);
 			break;
 		case 180:
-			loc.setY(loc.getY() - more);
-			break;
-		case 270:
 			loc.setY(loc.getY() + more);
 			break;
+		case 270:
+			loc.setX(loc.getX() - more);
+			break;
 		}
+		trackStage++;
 	}
 
 	private void die() {
@@ -145,32 +155,36 @@ public class Enemy extends Entity {
 	}
 
 	private void reachGoal() {
-		player.takeLives();
-		removeSelfFromGrid();
+		// player.takeLives();
+		// removeSelfFromGrid();
 	}
 
 	private boolean nextMoveIsValid() {
-		Location loc = player.getWorld().getPath().get(trackStage);
+		Location location = world.getPath().getPixel(trackStage);
+		// System.out.print(loc);
 		int newCoord;
 		switch (dir) {
 		case 0:
-			newCoord = loc.getY() + speed;
-			if (newCoord >= loc.getY())
+			newCoord = loc.getY() - speed;
+			if (newCoord <= location.getY())
 				return false;
 			break;
 		case 90:
 			newCoord = loc.getX() + speed;
-			if (newCoord >= loc.getX())
+			System.out.println("New coord = " + newCoord);
+			if (newCoord >= location.getX())
 				return false;
 			break;
 		case 180:
-			newCoord = loc.getY() - speed;
-			if (newCoord <= loc.getY())
+			newCoord = loc.getY() + speed;
+			System.out.println("New coord = " + newCoord);
+			if (newCoord >= location.getY())
 				return false;
 			break;
 		case 270:
 			newCoord = loc.getX() - speed;
-			if (newCoord <= loc.getX())
+			System.out.println("New coord = " + newCoord);
+			if (newCoord <= location.getX())
 				return false;
 			break;
 		}
@@ -178,28 +192,32 @@ public class Enemy extends Entity {
 	}
 
 	private int movesLeftInSide() {
-		Location loc = player.getWorld().getPath().get(trackStage);
+		Location location = world.getPath().getPixel(trackStage);
 		switch (dir) {
 		case 0:
-			return loc.getY() - loc.getY();
+			return loc.getY() - location.getY();
 		case 90:
-			return loc.getX() - loc.getX();
+			return location.getX() - loc.getX();
 		case 180:
-			return loc.getY() + loc.getY();
+			return location.getY() - loc.getY();
 		case 270:
-			return loc.getX() + loc.getX();
+			return loc.getX() - location.getX();
 		default:
 			return -1;
 		}
 	}
 
 	private Location getNextLoc() {
-		return player.getWorld().getPath().get(trackStage + 1);
+		if (trackStage < world.getPath().getFullPixelPath().size() - 1)
+			return world.getPath().getPixel(trackStage + 1);
+		return null;
 	}
 
 	private boolean atEndOfTrack() {
-		int finalStage = player.getWorld().getPath().length() - 1;
-		Location finalLoc = player.getWorld().getPath().get(finalStage);
+
+		int finalStage = world.getPath().getFullGridPath().size() - 1;
+		System.out.println(finalStage);
+		Location finalLoc = world.getPath().getPixel(finalStage);
 		if (trackStage != finalStage) {
 			return false;
 		} else {
@@ -218,7 +236,9 @@ public class Enemy extends Entity {
 				if (loc.getX() <= finalLoc.getX())
 					return true;
 			}
-			return false;
 		}
+
+		return false;
 	}
+
 }
