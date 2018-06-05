@@ -1,9 +1,5 @@
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
-
-import javax.imageio.ImageIO;
 
 public class World {
 	private int wave;
@@ -12,6 +8,7 @@ public class World {
 	private ArrayList<Wave> waves;
 	private Grid grid;
 	private Path path;
+	private ImageLoader loader;
 
 	public World() {
 		wave = 0;
@@ -19,21 +16,14 @@ public class World {
 		grid = new Grid();
 		enemyList = new ArrayList<Enemy>();
 		waves = new ArrayList<Wave>();
+		loader = new ImageLoader();
 		initImages();
 		initTrack();
 		initWave1();
 	}
+
 	private void initImages() {
-		try {
-			// read in images
-			BufferedImage img = ImageIO.read(new File("H:\\APCS\\RedBug.png"));
-			// add enemies to enemy list
-			enemyList.add(new Enemy(10, 10, null, img, this));
-		} catch (IOException e) {
-			System.err
-					.println("Some or all resources not found, exiting game.");
-			System.exit(0);
-		}
+		enemyList.add(new Enemy(10, 10, null, loader.getBlueBug().getImage(), this));
 	}
 
 	private void initTrack() {

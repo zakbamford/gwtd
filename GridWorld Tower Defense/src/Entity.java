@@ -1,5 +1,7 @@
 import java.awt.Image;
 
+import javax.swing.ImageIcon;
+
 
 public abstract class Entity implements Actor {
 	protected Location loc;

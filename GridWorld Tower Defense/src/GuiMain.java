@@ -38,7 +38,6 @@ public class GuiMain extends JFrame {
 	private GamePanel gamepanel;
 	private Player player;
 	private Timer timer;
-	private ImageLoader loader;
 	private ImageIcon img;
 	private BufferedImage image;
 
@@ -64,7 +63,6 @@ public class GuiMain extends JFrame {
 		getinfo = new JButton("Get info of selected tower");
 		invisiblebutton = new JRadioButton();
 		gamepanel = new GamePanel();
-		loader = new ImageLoader();
 		ButtonHandler buttonHandler = new ButtonHandler();
 		ButtonGroup buttons = new ButtonGroup();
 		buttons.add(tower);

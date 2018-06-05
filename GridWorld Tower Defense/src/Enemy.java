@@ -1,4 +1,5 @@
 import java.awt.Image;
+import java.awt.image.BufferedImage;
 
 public class Enemy extends Entity {
 
@@ -8,14 +9,14 @@ public class Enemy extends Entity {
 	private int trackStage;
 	private Enemy spawnOnDeath;
 
-	public Enemy(int health, int speed, Enemy spawnOnDeath, Image img,
+	public Enemy(int health, int speed, Enemy spawnOnDeath, Image image,
 			World world) {
 		this.health = health;
 		dir = 90;
 		this.speed = speed;
 		trackStage = 1;
 		this.spawnOnDeath = spawnOnDeath;
-		this.img = img;
+		this.img = image;
 		this.world = world;
 		this.loc = new Location(0, 8 * Constants.PIXELS_PER_SQUARE_VERT);
 	}

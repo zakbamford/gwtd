@@ -1,5 +1,4 @@
-import javax.swing.*;
-import java.net.URL;
+import javax.swing.ImageIcon;
 
 public class ImageLoader {
 
@@ -64,8 +63,32 @@ public class ImageLoader {
 		return UberTower;
 	}
 
-	public ImageIcon getEnemy() {
-		return Enemy;
+	public ImageIcon getRedBug() {
+		return redBug;
+	}
+	
+	public ImageIcon getBlueBug() {
+		return blueBug;
+	}
+	
+	public ImageIcon getGreenBug() {
+		return greenBug;
+	}
+	
+	public ImageIcon getYellowBug() {
+		return yellowBug;
+	}
+	
+	public ImageIcon getPinkBug() {
+		return pinkBug;
+	}
+	
+	public ImageIcon getPurpleBug() {
+		return purpleBug;
+	}
+	
+	public ImageIcon getOrangeBug() {
+		return orangeBug;
 	}
 
 }
