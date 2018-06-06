@@ -1,13 +1,29 @@
-import javax.xml.stream.Location;
-
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public abstract class Tower extends Entity {
+import javax.swing.Timer;
+
+public abstract class Tower extends Entity implements ActionListener {
 
 	protected int range;
 	protected int damage;
 	protected int fireRate;
 	protected double cost;
+	protected Timer timer;
+
+	public Tower(int fireRate) {
+		this.fireRate = fireRate;
+		timer = new Timer((1000 / fireRate), this);
+		timer.start();
+	}
+
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == timer) {
+			System.out.println("Timer tick");
+			act();
+		}
+	}
 
 	public void act() {
 		attack(getEnemies());

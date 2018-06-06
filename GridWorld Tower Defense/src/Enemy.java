@@ -28,9 +28,8 @@ public class Enemy extends Entity {
 		trackStage = 0;
 		spawnOnDeath = enemy.getSpawnOnDeath();
 		img = enemy.getImage();
-		player = enemy.getPlayer();
 		world = enemy.getWorld();
-		loc = enemy.getLoc();
+		loc = new Location(0, 8 * Constants.PIXELS_PER_SQUARE_VERT);
 	}
 
 	public void act() {
@@ -85,18 +84,13 @@ public class Enemy extends Entity {
 
 	private void move() {
 		if (nextMoveIsValid()) {
-			// System.out.println("Move is valid");
 			moveUninterrupted();
 		} else {
 			moveInterrupted();
-			// System.out.println("Move is invalid");
 		}
 	}
 
 	private void moveUninterrupted() {
-
-		System.out.println("dir = " + dir);
-
 		switch (dir) {
 		case 0:
 			loc.setY(loc.getY() - speed);
@@ -114,9 +108,7 @@ public class Enemy extends Entity {
 	}
 
 	private void moveInterrupted() {
-		System.out.println("dir = " + dir);
 		int moves = movesLeftInSide();
-		System.out.println("Moves left = " + moves);
 		int more = speed - moves;
 		switch (dir) {
 		case 0:
@@ -151,18 +143,17 @@ public class Enemy extends Entity {
 	}
 
 	private void die() {
-		player.giveMoney();
-		removeSelfFromGrid();
+		if (spawnOnDeath != null)
+			world.addEnemy(new Enemy(spawnOnDeath));
+		world.removeEnemy(this);
 	}
 
 	private void reachGoal() {
-		// player.takeLives();
-		// removeSelfFromGrid();
+		world.removeEnemy(this);
 	}
 
 	private boolean nextMoveIsValid() {
 		Location location = world.getPath().getPixel(trackStage);
-		// System.out.print(loc);
 		int newCoord;
 		switch (dir) {
 		case 0:
@@ -172,19 +163,16 @@ public class Enemy extends Entity {
 			break;
 		case 90:
 			newCoord = loc.getX() + speed;
-			System.out.println("New coord = " + newCoord);
 			if (newCoord >= location.getX())
 				return false;
 			break;
 		case 180:
 			newCoord = loc.getY() + speed;
-			System.out.println("New coord = " + newCoord);
 			if (newCoord >= location.getY())
 				return false;
 			break;
 		case 270:
 			newCoord = loc.getX() - speed;
-			System.out.println("New coord = " + newCoord);
 			if (newCoord <= location.getX())
 				return false;
 			break;
@@ -215,7 +203,7 @@ public class Enemy extends Entity {
 	}
 
 	private boolean atEndOfTrack() {
-		/*int finalStage = world.getPath().getFullPixelPath().size() - 1;
+		int finalStage = world.getPath().getFullPixelPath().size() - 1;
 		Location finalLoc = world.getPath().getPixel(finalStage);
 		if (trackStage != finalStage) {
 			return false;
@@ -235,7 +223,7 @@ public class Enemy extends Entity {
 				if (loc.getX() <= finalLoc.getX())
 					return true;
 			}
-		}*/
+		}
 		return false;
 	}
 

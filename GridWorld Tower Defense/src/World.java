@@ -20,10 +20,14 @@ public class World {
 		initImages();
 		initTrack();
 		initWave1();
+		initWave2();
 	}
 
 	private void initImages() {
-		enemyList.add(new Enemy(10, 10, null, loader.getBlueBug().getImage(), this));
+		enemyList.add(new Enemy(10, 10, null, loader.getRedBug().getImage(),
+				this));
+		enemyList.add(new Enemy(10, 15, enemyList.get(0), loader.getBlueBug().getImage(),
+				this));
 	}
 
 	private void initTrack() {
@@ -55,12 +59,15 @@ public class World {
 
 	private void initWave1() {
 		ArrayList<WavePart> parts = new ArrayList<WavePart>();
-		parts.add(new WavePart(1, 25, 0, enemyList.get(0), this));
+		parts.add(new WavePart(10, 5, 0, enemyList.get(0), this));
 		waves.add(new Wave(parts));
 	}
 
 	private void initWave2() {
-
+		ArrayList<WavePart> parts = new ArrayList<WavePart>();
+		parts.add(new WavePart(10, 25, 0, enemyList.get(1), this));
+		parts.add(new WavePart(20, 5, 0, enemyList.get(0), this));
+		waves.add(new Wave(parts));
 	}
 
 	private void initWave3() {
@@ -100,11 +107,12 @@ public class World {
 	}
 
 	public boolean waveIsDone() {
-		return waves.get(wave).isDone();
+		return enemies.size() == 0;
 	}
 
 	public void spawnNextWave() {
 		waves.get(wave).spawn();
+		wave++;
 	}
 
 	public void addEnemy(Enemy enemy) {
@@ -137,5 +145,9 @@ public class World {
 
 	public Path getPath() {
 		return path;
+	}
+
+	public void removeEnemy(Enemy enemy) {
+		System.out.println("Removed enemy: " + enemies.remove(enemy));
 	}
 }

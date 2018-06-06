@@ -1,11 +1,18 @@
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class Wave {
+import javax.swing.Timer;
 
+public class Wave implements ActionListener {
+
+	private int currentPart;
 	private ArrayList<WavePart> parts;
+	private Timer timer;
 
 	// Constructs a wave of enemies consisting of different wave parts
 	public Wave(ArrayList<WavePart> parts) {
+		currentPart = 0;
 		this.parts = parts;
 	}
 
@@ -13,22 +20,16 @@ public class Wave {
 	// precondition: subwaves are sorted by spawn time
 	// postcondition: entire wave has been spawned
 	public void spawn() {
-
-		System.out.println("Spawning, parts.size = " + parts.size());
-		int i = 0;
-		while (i < parts.size()) {
-			if (parts.get(i).getStartTime() == Constants.TIME) {
-				parts.get(i).spawn();
-				i++;
-			}
-		}
+		timer = new Timer(20, this);
+		timer.start();
+		actionPerformed(null);
 	}
 
-	public boolean isDone() {
-		for (WavePart p : parts) {
-			if (!p.isDone())
-				return false;
+	public void actionPerformed(ActionEvent e) {
+		parts.get(currentPart).spawn();
+		currentPart++;
+		if (currentPart == parts.size()) {
+			timer.stop();
 		}
-		return true;
 	}
 }

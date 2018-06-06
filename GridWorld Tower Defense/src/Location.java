@@ -227,10 +227,15 @@ public class Location implements Comparable
         return 0;
     }
     
-    public int distanceTo(Location enemyLoc) {
-    	double pixelX = x * Constants.PIXELS_PER_SQUARE;
-    	double pixelY = y * Constants.PIXELS_PER_SQUARE;
-    	return (int) Math.sqrt(Math.pow(pixelX, 2) + Math.pow(pixelY, 2));
+    public int distanceTo(Location towerLoc) {
+    	double enemyX = x;
+    	double enemyY = y;
+    	double towerX = towerLoc.getX() * Constants.PIXELS_PER_SQUARE_HORIZ;
+    	double towerY = towerLoc.getY() * Constants.PIXELS_PER_SQUARE_VERT;
+    	System.out.println("Diff x: " + (enemyX - towerX));
+    	System.out.println("Tower y : " + (enemyY - towerY));
+    	System.out.println("Distance = " + (int) Math.sqrt(Math.pow((enemyX - towerX), 2) + Math.pow((enemyY - towerY), 2)));
+    	return (int) Math.sqrt(Math.pow((enemyX - towerX), 2) + Math.pow((enemyY - towerY), 2));
     }
 
     /**

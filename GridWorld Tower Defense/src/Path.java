@@ -33,10 +33,14 @@ public class Path {
 		pixelPath = new ArrayList<Location>();
 		for (Location l : path) {
 			// Use actual JButton size to get translation correct
-			pixelPath.add(new Location((l.getX() * Constants.PIXELS_PER_SQUARE_HORIZ), (l.getY() * Constants.PIXELS_PER_SQUARE_VERT)));
-				//	new Location((l.getX() * Constants.PIXELS_PER_SQUARE), (l.getY() * Constants.PIXELS_PER_SQUARE)));
+			pixelPath.add(new Location(
+					(l.getX() * Constants.PIXELS_PER_SQUARE_HORIZ),
+					(l.getY() * Constants.PIXELS_PER_SQUARE_VERT)));
+			// new Location((l.getX() * Constants.PIXELS_PER_SQUARE), (l.getY()
+			// * Constants.PIXELS_PER_SQUARE)));
 		}
-		System.out.println("Pixel path = " + pixelPath);
+		pixelPath.add(new Location(1230, 258));
+		pixelPath.add(new Location(Integer.MAX_VALUE, 258));
 	}
 
 	public Location getGrid(int stage) {
