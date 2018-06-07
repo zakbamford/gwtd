@@ -28,9 +28,10 @@ public class Grid {
 	}
 
 	public boolean isValid(Location loc) {
-		return (loc.getX() >= 0 && loc.getX() < Constants.GRID_X) && (loc.getY() >= 0 && loc.getY() < Constants.GRID_Y);
+		return (loc.getX() >= 0 && loc.getX() < Constants.GRID_X)
+				&& (loc.getY() >= 0 && loc.getY() < Constants.GRID_Y);
 	}
-	
+
 	public ArrayList<Location> getValidAdjacentLocations(Location loc) {
 		ArrayList<Location> locs = new ArrayList<Location>();
 
@@ -43,14 +44,4 @@ public class Grid {
 		}
 		return locs;
 	}
-
-	public ArrayList<Location> getOccupiedAdjacentLocations(Location loc) {
-		ArrayList<Location> locs = new ArrayList<Location>();
-		for (Location neighborLoc : getValidAdjacentLocations(loc)) {
-			if (get(neighborLoc) != null)
-				locs.add(neighborLoc);
-		}
-		return locs;
-	}
-
 }

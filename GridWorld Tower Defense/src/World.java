@@ -16,24 +16,40 @@ public class World {
 
 	public World() {
 		wave = 0;
-		money = 1000;
-		lives = 100;
+		money = 5000;
+		lives = 2000;
 		enemies = new ArrayList<Enemy>();
 		grid = new Grid();
 		enemyList = new ArrayList<Enemy>();
 		waves = new ArrayList<Wave>();
 		lasers = new ArrayList<Line2D.Double>();
 		loader = new ImageLoader();
-		initImages();
+		initEnemies();
 		initTrack();
 		initWave1();
 		initWave2();
+		initWave3();
+		initWave4();
+		initWave5();
+		initWave6();
+		initWave7();
+		initWave8();
+		initWave9();
+		initWave10();
 	}
 
-	private void initImages() {
-		enemyList.add(new Enemy(10, 5, loader.getRedBug().getImage(), this));
-		enemyList.add(new Enemy(15, 7, loader.getBlueBug().getImage(), this));
-		enemyList.add(new Enemy(15, 10, loader.getGreenBug().getImage(), this));
+	private void initEnemies() {
+		enemyList.add(new Enemy(100, 5, loader.getRedBug().getImage(), this));
+		enemyList.add(new Enemy(150, 7, loader.getBlueBug().getImage(), this));
+		enemyList
+				.add(new Enemy(200, 10, loader.getGreenBug().getImage(), this));
+		enemyList
+				.add(new Enemy(300, 15, loader.getYellowBug().getImage(), this));
+		enemyList.add(new Enemy(500, 20, loader.getPinkBug().getImage(), this));
+		enemyList
+				.add(new Enemy(700, 25, loader.getPurpleBug().getImage(), this));
+		enemyList.add(new Enemy(1000, 30, loader.getOrangeBug().getImage(),
+				this));
 	}
 
 	private void initTrack() {
@@ -65,47 +81,84 @@ public class World {
 
 	private void initWave1() {
 		ArrayList<WavePart> parts = new ArrayList<WavePart>();
-		parts.add(new WavePart(10, 5, 0, enemyList.get(0), this));
+		parts.add(new WavePart(30, 10, enemyList.get(0), this));
 		waves.add(new Wave(parts));
 	}
 
 	private void initWave2() {
 		ArrayList<WavePart> parts = new ArrayList<WavePart>();
-		parts.add(new WavePart(10, 25, 0, enemyList.get(2), this));
-		parts.add(new WavePart(20, 5, 0, enemyList.get(0), this));
+		parts.add(new WavePart(40, 5, enemyList.get(0), this));
+		parts.add(new WavePart(30, 25, enemyList.get(1), this));
 		waves.add(new Wave(parts));
 	}
 
 	private void initWave3() {
-
+		ArrayList<WavePart> parts = new ArrayList<WavePart>();
+		parts.add(new WavePart(50, 5, enemyList.get(0), this));
+		parts.add(new WavePart(50, 10, enemyList.get(1), this));
+		parts.add(new WavePart(50, 20, enemyList.get(2), this));
+		waves.add(new Wave(parts));
 	}
 
 	private void initWave4() {
-
+		ArrayList<WavePart> parts = new ArrayList<WavePart>();
+		parts.add(new WavePart(100, 5, enemyList.get(1), this));
+		parts.add(new WavePart(50, 10, enemyList.get(2), this));
+		parts.add(new WavePart(30, 10, enemyList.get(3), this));
+		waves.add(new Wave(parts));
 	}
 
 	private void initWave5() {
-
+		ArrayList<WavePart> parts = new ArrayList<WavePart>();
+		parts.add(new WavePart(200, 2, enemyList.get(0), this));
+		parts.add(new WavePart(100, 5, enemyList.get(1), this));
+		parts.add(new WavePart(100, 10, enemyList.get(3), this));
+		waves.add(new Wave(parts));
 	}
 
 	private void initWave6() {
-
+		ArrayList<WavePart> parts = new ArrayList<WavePart>();
+		parts.add(new WavePart(300, 2, enemyList.get(0), this));
+		parts.add(new WavePart(200, 2, enemyList.get(2), this));
+		parts.add(new WavePart(100, 10, enemyList.get(4), this));
+		waves.add(new Wave(parts));
 	}
 
 	private void initWave7() {
-
+		ArrayList<WavePart> parts = new ArrayList<WavePart>();
+		parts.add(new WavePart(300, 2, enemyList.get(1), this));
+		parts.add(new WavePart(200, 2, enemyList.get(2), this));
+		parts.add(new WavePart(100, 10, enemyList.get(4), this));
+		waves.add(new Wave(parts));
 	}
 
 	private void initWave8() {
-
+		ArrayList<WavePart> parts = new ArrayList<WavePart>();
+		parts.add(new WavePart(300, 2, enemyList.get(2), this));
+		parts.add(new WavePart(150, 2, enemyList.get(3), this));
+		parts.add(new WavePart(50, 10, enemyList.get(5), this));
+		waves.add(new Wave(parts));
 	}
 
 	private void initWave9() {
-
+		ArrayList<WavePart> parts = new ArrayList<WavePart>();
+		parts.add(new WavePart(500, 1, enemyList.get(2), this));
+		parts.add(new WavePart(200, 2, enemyList.get(3), this));
+		parts.add(new WavePart(200, 2, enemyList.get(5), this));
+		parts.add(new WavePart(50, 5, enemyList.get(6), this));
+		waves.add(new Wave(parts));
 	}
 
 	private void initWave10() {
-
+		ArrayList<WavePart> parts = new ArrayList<WavePart>();
+		parts.add(new WavePart(9001, 2, enemyList.get(0), this));
+		parts.add(new WavePart(9001, 2, enemyList.get(1), this));
+		parts.add(new WavePart(9001, 2, enemyList.get(2), this));
+		parts.add(new WavePart(9001, 2, enemyList.get(3), this));
+		parts.add(new WavePart(9001, 2, enemyList.get(4), this));
+		parts.add(new WavePart(9001, 2, enemyList.get(5), this));
+		parts.add(new WavePart(9001, 2, enemyList.get(2), this));
+		waves.add(new Wave(parts));
 	}
 
 	public int getCurrentWave() {
@@ -154,7 +207,7 @@ public class World {
 	}
 
 	public void removeEnemy(Enemy enemy) {
-		System.out.println("Removed enemy: " + enemies.remove(enemy));
+		enemies.remove(enemy);
 	}
 
 	public void addLaser(int x1, int y1, int x2, int y2) {
@@ -173,8 +226,12 @@ public class World {
 		return lives;
 	}
 
-	public void giveMoney() {
-		money += 10;
+	public void takeMoney(int money) {
+		this.money -= money;
+	}
+
+	public void giveMoney(int money) {
+		this.money += money;
 	}
 
 	public void takeLives(int lives) {
@@ -193,27 +250,11 @@ public class World {
 		money -= t.getCost();
 	}
 
-	public void purchase(IceTower t) {
-		money -= t.getCost();
-	}
-
 	public void purchase(SniperTower t) {
 		money -= t.getCost();
 	}
 
 	public void purchase(UberTower t) {
 		money -= t.getCost();
-	}
-
-	public void lose()
-	{
-		if (//enemy reaches end)
-		{
-			lives--;
-		}
-		if (lives == 0)
-		{
-			//game over
-		}
 	}
 }

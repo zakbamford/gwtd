@@ -6,7 +6,7 @@ public class SniperTower extends Tower {
 		super(1);
 		damage = 30;
 		range = 9001;
-		cost = 200;
+		cost = 1000;
 		this.loc = loc;
 		this.world = world;
 	}
@@ -38,35 +38,5 @@ public class SniperTower extends Tower {
 			Enemy e = enemies.get(0);
 			e.setHealth(e.getHealth() - damage);
 		}
-	}
-
-	public double getCost() {
-		return cost;
-
-	}
-
-	public void setCost(double cost) {
-		this.cost = cost;
-
-	}
-
-	public int getDamage() {
-		return damage;
-
-	}
-
-	public void setDamage(int damage) {
-		this.damage = damage;
-
-	}
-
-	public int fireRate() {
-		return fireRate;
-
-	}
-
-	public void setFireRate(int firerate) {
-		this.fireRate = firerate;
-
 	}
 }

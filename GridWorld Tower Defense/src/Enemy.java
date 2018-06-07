@@ -7,6 +7,7 @@ public class Enemy extends Entity {
 	private int dir;
 	private int speed;
 	private int trackStage;
+	private final int ORIGINAL_HEALTH;
 
 	public Enemy(int health, int speed, Image image, World world) {
 		this.health = health;
@@ -16,6 +17,7 @@ public class Enemy extends Entity {
 		this.img = image;
 		this.world = world;
 		this.loc = new Location(0, 8 * Constants.PIXELS_PER_SQUARE_VERT);
+		ORIGINAL_HEALTH = health;
 	}
 
 	public Enemy(Enemy enemy) {
@@ -26,6 +28,7 @@ public class Enemy extends Entity {
 		img = enemy.getImage();
 		world = enemy.getWorld();
 		loc = new Location(0, 8 * Constants.PIXELS_PER_SQUARE_VERT);
+		ORIGINAL_HEALTH = enemy.getHealth();
 	}
 
 	public void act() {
@@ -132,11 +135,12 @@ public class Enemy extends Entity {
 
 	private void die() {
 		world.removeEnemy(this);
+		world.giveMoney(ORIGINAL_HEALTH / 5);
 	}
 
 	private void reachGoal() {
 		world.removeEnemy(this);
-		world.takeLives(health);
+		world.takeLives(health / 5);
 	}
 
 	private boolean nextMoveIsValid() {

@@ -9,7 +9,7 @@ public abstract class Tower extends Entity implements ActionListener {
 	protected int range;
 	protected int damage;
 	protected int fireRate;
-	protected double cost;
+	protected int cost;
 	protected Timer timer;
 
 	public Tower(int fireRate) {
@@ -19,12 +19,10 @@ public abstract class Tower extends Entity implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		System.out.println("action performed");	
 		act();
 	}
 
 	public void act() {
-		System.out.println("attacking");
 		attack(getEnemies());
 	}
 
@@ -32,12 +30,12 @@ public abstract class Tower extends Entity implements ActionListener {
 
 	public abstract void attack(ArrayList<Enemy> enemies);
 
-	public double getCost() {
+	public int getCost() {
 		return cost;
 
 	}
 
-	public void setCost(double cost) {
+	public void setCost(int cost) {
 		this.cost = cost;
 
 	}

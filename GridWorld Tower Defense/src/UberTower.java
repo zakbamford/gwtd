@@ -1,51 +1,37 @@
-import javax.xml.stream.Location;
 import java.util.ArrayList;
 
 public class UberTower extends Tower {
 
-	private Location loc;
-	private int range;
-	private int damage;
-	private double fireRate;
-	private double cost;
-
-	public UberTower() {
-		damage = 80;
-		fireRate = .2; // timer before it acts again
-		range = 8;//
-		cost = 1000;
-
+	public UberTower(Location loc, World world) {
+		super(50);
+		damage = 50;
+		range = 8;
+		cost = 5000;
+		this.loc = loc;
+		this.world = world;
 	}
 
-	public void act() {
-		ArrayList<Location> gr = getGrid().getOccupiedAdjacentLocations(
-				getLocation());
-
-		ArrayList<Enemy> a = new ArrayList<Enemy>();
-
-		for (int i = 0; i < gr.size(); i++) {
-			if (getGrid().get(gr.get(i)) instanceof Enemy) {
-				a.add((Enemy) (getGrid().get(gr.get(i))));
+	public ArrayList<Enemy> getEnemies() {
+		ArrayList<Enemy> enemies = world.getEnemies();
+		ArrayList<Enemy> inRange = new ArrayList<Enemy>();
+		for (int i = 0; i < enemies.size(); i++) {
+			if (enemies.get(i).getLoc().distanceTo(loc) <= (range * Constants.PIXELS_PER_SQUARE_VERT)) {
+				inRange.add(enemies.get(i));
 			}
-
 		}
-
-		if (a.size > 0) {
-			double time = fireRate;
-			fireRate--;
-
-			if (fireRate < 0) {
-				attack();
-				attack();
-				attack();
-				attack();
-				attack();
-				fireRate = time;
-
-			}
-
-		}
-
+		ArrayList<Enemy> ret = new ArrayList<Enemy>();
+		if (inRange.size() > 0)
+			ret.add(inRange.get(0));
+		return ret;
 	}
 
+	public void attack(ArrayList<Enemy> enemies) {
+		if (enemies.size() > 0) {
+			world.addLaser(loc.getX() * Constants.PIXELS_PER_SQUARE_HORIZ + Constants.PIXELS_PER_SQUARE_HORIZ / 2,
+					loc.getY() * Constants.PIXELS_PER_SQUARE_VERT + Constants.PIXELS_PER_SQUARE_VERT / 2, enemies.get(0).getLoc().getX() + enemies.get(0).getImage().getWidth(null) / 2,
+					enemies.get(0).getLoc().getY() + enemies.get(0).getImage().getHeight(null) / 2);
+			Enemy e = enemies.get(0);
+			e.setHealth(e.getHealth() - damage);
+		}
+	}
 }
