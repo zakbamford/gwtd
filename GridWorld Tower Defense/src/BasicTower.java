@@ -3,9 +3,9 @@ import java.util.ArrayList;
 public class BasicTower extends Tower {
 
 	public BasicTower(Location loc, World world) {
-		super(1);
-		damage = 1;
-		range = 2;
+		super(3);
+		damage = 10;
+		range = 8;
 		cost = 200;
 		this.loc = loc;
 		this.world = world;
@@ -27,6 +27,9 @@ public class BasicTower extends Tower {
 
 	public void attack(ArrayList<Enemy> enemies) {
 		if (enemies.size() > 0) {
+			world.addLaser(loc.getX() * Constants.PIXELS_PER_SQUARE_HORIZ + Constants.PIXELS_PER_SQUARE_HORIZ / 2,
+					loc.getY() * Constants.PIXELS_PER_SQUARE_VERT + Constants.PIXELS_PER_SQUARE_VERT / 2, enemies.get(0).getLoc().getX() + enemies.get(0).getImage().getWidth(null) / 2,
+					enemies.get(0).getLoc().getY() + enemies.get(0).getImage().getHeight(null) / 2);
 			Enemy e = enemies.get(0);
 			e.setHealth(e.getHealth() - damage);
 		}

@@ -19,13 +19,12 @@ public abstract class Tower extends Entity implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == timer) {
-			System.out.println("Timer tick");
-			act();
-		}
+		System.out.println("action performed");	
+		act();
 	}
 
 	public void act() {
+		System.out.println("attacking");
 		attack(getEnemies());
 	}
 

@@ -1,20 +1,16 @@
 import java.awt.BasicStroke;
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
+import java.awt.geom.Line2D;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.util.ArrayList;
 
-import javax.imageio.ImageIO;
 import javax.swing.ButtonGroup;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -36,16 +32,16 @@ public class GuiMain extends JFrame {
 	private JButton[][] grid;
 	private JPanel buttonpanel;
 	private GamePanel gamepanel;
-	private Player player;
+	private World world;
 	private Timer timer;
 	private BufferedImage image;
 	private ImageLoader loader;
 
-	public GuiMain(Player player) {
+	public GuiMain(World world) {
 		super("Tower Defense");
 		setResizable(false);
 		setLayout(new BorderLayout());
-		this.player = player;
+		this.world = world;
 		// Initializing and adding the buttons to the button panel
 		buttonpanel = new JPanel();
 		buttonpanel.setLayout(new GridLayout(10, 1));
@@ -63,8 +59,8 @@ public class GuiMain extends JFrame {
 		gamepanel = new GamePanel();
 		ButtonHandler buttonHandler = new ButtonHandler();
 		ButtonGroup buttons = new ButtonGroup();
-		towerinfo
-				.setText("Welcome to GridWorld Defense! \n How to play: \n Build towers to kill enemies. \n Don't let the enemies get \n to your base. \n If you lose all your health, \n then it's game over for you. \n Good Luck!");
+		towerinfo.setText(
+				"Welcome to GridWorld Defense! \n How to play: \n Build towers to kill enemies. \n Don't let the enemies get \n to your base. \n If you lose all your health, \n then it's game over for you. \n Good Luck!");
 		towerinfo.setEditable(false);
 		buttons.add(tower);
 		buttons.add(firetower);
@@ -90,8 +86,7 @@ public class GuiMain extends JFrame {
 		getinfo.addActionListener(buttonHandler);
 		playerinfo.setBackground(Color.yellow);
 		buttonpanel.add(playerinfo);
-		playerinfo
-				.setText("Player Info: \n Money: 2000 \n Health: 200 \n Wave: 0");
+		playerinfo.setText("Player Info: \n Money: 2000 \n Health: 200 \n Wave: 0");
 		playerinfo.setEditable(false);
 		// Adding the button panel to a panel that stores everything
 		add(buttonpanel, BorderLayout.EAST);
@@ -109,7 +104,7 @@ public class GuiMain extends JFrame {
 			}
 		}
 
-		for (Location l : player.getWorld().getPath().getFullGridPath())
+		for (Location l : world.getPath().getFullGridPath())
 			grid[l.getY()][l.getX()].setBackground(Color.YELLOW);
 		add(gamepanel, BorderLayout.CENTER);
 		// Add the tiles later
@@ -130,54 +125,43 @@ public class GuiMain extends JFrame {
 			if (e.getSource() == startwave) {
 				timer = new Timer(Constants.MILLIS_PER_TICK, this);
 				timer.start();
-				player.getWorld().spawnNextWave();
+				world.spawnNextWave();
 				startwave.setEnabled(false);
 
 			} else if (e.getSource() == timer) {
 				gamepanel.updateUI();
-				for (int i = 0; i < player.getWorld().getEnemies().size(); i++) {
-					player.getWorld().getEnemies().get(i).act();
+				for (int i = 0; i < world.getEnemies().size(); i++) {
+					world.getEnemies().get(i).act();
 				}
-				Entity tower;
-				for (int i = 0; i < Constants.GRID_X; i++) {
-					for (int j = 0; j < Constants.GRID_Y; j++) {
-						tower = player.getWorld().getGrid().get(i, j);
-						if (tower != null)
-							player.getWorld().getGrid().get(i, j).act();
-					}
-				}
-				if (player.getWorld().waveIsDone()) {
+				if (world.waveIsDone()) {
 					startwave.setEnabled(true);
 				}
+				playerinfo.setText("Player Info: \n Money: " + world.getMoney() + "\n Health: " + world.getLives() +  "\n Wave: " + world.getCurrentWave());
 			} else {
 				for (int r = 0; r < 20; r++) {
 					for (int c = 0; c < 30; c++) {
 						if (e.getSource() == grid[r][c]) {
-							if (tower.isSelected()
-									&& grid[r][c].getBackground() == Color.green) {
+							if (tower.isSelected() && grid[r][c].getBackground() == Color.green) {
 								grid[r][c].setBackground(Color.white);
 								invisiblebutton.setSelected(true);
-								BasicTower b = new BasicTower(
-										new Location(c, r), player.getWorld());
-								player.getWorld().getGrid().add(c, r, b);
+								BasicTower b = new BasicTower(new Location(c, r), world);
+								world.getGrid().add(c, r, b);
 							}
-							if (firetower.isSelected()
-									&& grid[r][c].getBackground() == Color.green) {
+							if (firetower.isSelected() && grid[r][c].getBackground() == Color.green) {
 								grid[r][c].setBackground(Color.red);
 								invisiblebutton.setSelected(true);
 							}
-							if (icetower.isSelected()
-									&& grid[r][c].getBackground() == Color.green) {
+							if (icetower.isSelected() && grid[r][c].getBackground() == Color.green) {
 								grid[r][c].setBackground(Color.cyan);
 								invisiblebutton.setSelected(true);
 							}
-							if (snipertower.isSelected()
-									&& grid[r][c].getBackground() == Color.green) {
+							if (snipertower.isSelected() && grid[r][c].getBackground() == Color.green) {
 								grid[r][c].setBackground(Color.gray);
 								invisiblebutton.setSelected(true);
+								SniperTower b = new SniperTower(new Location(c, r), world);
+								world.getGrid().add(c, r, b);
 							}
-							if (ubertower.isSelected()
-									&& grid[r][c].getBackground() == Color.green) {
+							if (ubertower.isSelected() && grid[r][c].getBackground() == Color.green) {
 								grid[r][c].setBackground(Color.MAGENTA);
 								invisiblebutton.setSelected(true);
 							}
@@ -187,24 +171,24 @@ public class GuiMain extends JFrame {
 			}
 			if (e.getSource() == getinfo) {
 				if (tower.isSelected()) {
-					towerinfo
-							.setText("Basic Tower. \n The most basic tower in the game \n Shoots lazers at the enemies. \n Damage: 10 \n Fire Rate: 1 ammo per second \n Range: 1 space in any direction \n COST: 200");
+					towerinfo.setText(
+							"Basic Tower. \n The most basic tower in the game \n Shoots lazers at the enemies. \n Damage: 10 \n Fire Rate: 1 ammo per second \n Range: 1 space in any direction \n COST: 200");
 				}
 				if (firetower.isSelected()) {
-					towerinfo
-							.setText("Fire Tower. \n A tower made of fire \n Shoots fire in all directions. \n Damage: 8 \n Fire Rate: 1 ammo per second \n Range: 1 space in any direction \n COST: 1000");
+					towerinfo.setText(
+							"Fire Tower. \n A tower made of fire \n Shoots fire in all directions. \n Damage: 8 \n Fire Rate: 1 ammo per second \n Range: 1 space in any direction \n COST: 1000");
 				}
 				if (icetower.isSelected()) {
-					towerinfo
-							.setText("Ice Tower. \n Slows down enemies \n Shoots lazers at the enemies. \n Damage: 10 \n Fire Rate: 1 ammo per second \n Range: 1 space in any direction \n COST: 200");
+					towerinfo.setText(
+							"Ice Tower. \n Slows down enemies \n Shoots lazers at the enemies. \n Damage: 10 \n Fire Rate: 1 ammo per second \n Range: 1 space in any direction \n COST: 200");
 				}
 				if (snipertower.isSelected()) {
-					towerinfo
-							.setText("Sniper Tower. \n  \n Shoots lazers at the enemies. \n Damage: 25 \n Fire Rate: 1 ammo per 3 seconds \n Range: 8 spaces in any direction \n COST: 500");
+					towerinfo.setText(
+							"Sniper Tower. \n  \n Shoots lazers at the enemies. \n Damage: 25 \n Fire Rate: 1 ammo per 3 seconds \n Range: 8 spaces in any direction \n COST: 500");
 				}
 				if (ubertower.isSelected()) {
-					towerinfo
-							.setText("Uber Tower. \n This will kill everything \n Same as basic tower \n Damage: 100 \n Fire Rate: 5 ammo per second \n Range: Everywhere \n COST: 50,000");
+					towerinfo.setText(
+							"Uber Tower. \n This will kill everything \n Same as basic tower \n Damage: 100 \n Fire Rate: 5 ammo per second \n Range: Everywhere \n COST: 50,000");
 				}
 			}
 		}
@@ -215,15 +199,21 @@ public class GuiMain extends JFrame {
 		public void paint(Graphics g) {
 			// Draw Swing components first
 			super.paint(g);
-			for (Enemy e : player.getWorld().getEnemies()) {
-				g.drawImage(e.getImage(), e.getLoc().getX(), e.getLoc().getY(),
-						this);
+			for (Enemy e : world.getEnemies()) {
+				g.drawImage(e.getImage(), e.getLoc().getX(), e.getLoc().getY(), this);
+			}
+			Graphics2D g2 = (Graphics2D) g;
+			for (int i = 0; i < world.getLasers().size(); i++) {
+				g2.setStroke(new BasicStroke(15));
+				g.setColor(Color.RED);
+				g2.draw(world.getLasers().get(i));
+				world.getLasers().remove(i);
 			}
 		}
 	}
 
 	public static void main(String[] args) {
-		Player p = new Player();
-		new GuiMain(p);
+		World w = new World();
+		new GuiMain(w);
 	}
 }

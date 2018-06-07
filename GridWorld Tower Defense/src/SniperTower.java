@@ -1,64 +1,72 @@
-import javax.xml.stream.Location;
 import java.util.ArrayList;
 
 public class SniperTower extends Tower {
 
-	private Location loc;
-	private int range;
-	private int damage;
-	private int fireRate;
-	private double cost;
+	public SniperTower(Location loc, World world) {
+		super(1);
+		damage = 30;
+		range = 9001;
+		cost = 200;
+		this.loc = loc;
+		this.world = world;
+	}
 
-	public SniperTower() {
-		damage = 25;
-		fireRate = 5;
-		range = 8;// infinite
-		cost = 500;
+	public ArrayList<Enemy> getEnemies() {
+		ArrayList<Enemy> enemies = world.getEnemies();
+		ArrayList<Enemy> inRange = new ArrayList<Enemy>();
+		for (int i = 0; i < enemies.size(); i++) {
+			if (enemies.get(i).getLoc().distanceTo(loc) <= (range * Constants.PIXELS_PER_SQUARE_VERT)) {
+				inRange.add(enemies.get(i));
+			}
+		}
+		ArrayList<Enemy> ret = new ArrayList<Enemy>();
+		if (inRange.size() > 0)
+			ret.add(inRange.get(0));
+		return ret;
+	}
+
+	public void attack(ArrayList<Enemy> enemies) {
+		if (enemies.size() > 0) {
+			world.addLaser(loc.getX() * Constants.PIXELS_PER_SQUARE_HORIZ
+					+ Constants.PIXELS_PER_SQUARE_HORIZ / 2, loc.getY()
+					* Constants.PIXELS_PER_SQUARE_VERT
+					+ Constants.PIXELS_PER_SQUARE_VERT / 2, enemies.get(0)
+					.getLoc().getX()
+					+ enemies.get(0).getImage().getWidth(null) / 2, enemies
+					.get(0).getLoc().getY()
+					+ enemies.get(0).getImage().getHeight(null) / 2);
+			Enemy e = enemies.get(0);
+			e.setHealth(e.getHealth() - damage);
+		}
+	}
+
+	public double getCost() {
+		return cost;
 
 	}
 
-	public void act() {
-		ArrayList<Location> gr = getGrid().getOccupiedLocations(getLocation());
-
-		ArrayList<Enemy> a = new ArrayList<Enemy>();
-
-		for (int i = 0; i < gr.size(); i++) {
-			if (getGrid().get(gr.get(i)) instanceof Enemy) {
-				a.add((Enemy) (getGrid().get(gr.get(i))));
-			}
-
-		}
-		if (a.size > 0) {
-			int time = fireRate;
-			fireRate--;
-
-			if (fireRate == 0) {
-				attack();
-				fireRate = time;
-			}
-
-		}
+	public void setCost(double cost) {
+		this.cost = cost;
 
 	}
 
-	public void attack() {
-
-		ArrayList<Location> gr = getGrid().getOccupiedLocations(getLocation());
-
-		ArrayList<Enemy> a = new ArrayList<Enemy>();
-
-		for (int i = 0; i < gr.size(); i++) {
-			if (getGrid().get(gr.get(i)) instanceof Enemy) {
-				a.add((Enemy) (getGrid().get(gr.get(i))));
-			}
-
-		}
-
-		// decrease health of enemy based on damage
-		int random = (int) (Math.random() * a.size());
-		int damageHealth = a.get(random).getHealth() - damage;
-		a.get(random).setHealth(damageHealth);
+	public int getDamage() {
+		return damage;
 
 	}
 
+	public void setDamage(int damage) {
+		this.damage = damage;
+
+	}
+
+	public int fireRate() {
+		return fireRate;
+
+	}
+
+	public void setFireRate(int firerate) {
+		this.fireRate = firerate;
+
+	}
 }

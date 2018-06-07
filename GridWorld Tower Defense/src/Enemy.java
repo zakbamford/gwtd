@@ -7,15 +7,12 @@ public class Enemy extends Entity {
 	private int dir;
 	private int speed;
 	private int trackStage;
-	private Enemy spawnOnDeath;
 
-	public Enemy(int health, int speed, Enemy spawnOnDeath, Image image,
-			World world) {
+	public Enemy(int health, int speed, Image image, World world) {
 		this.health = health;
 		dir = 90;
 		this.speed = speed;
 		trackStage = 1;
-		this.spawnOnDeath = spawnOnDeath;
 		this.img = image;
 		this.world = world;
 		this.loc = new Location(0, 8 * Constants.PIXELS_PER_SQUARE_VERT);
@@ -26,7 +23,6 @@ public class Enemy extends Entity {
 		dir = 90;
 		speed = enemy.getSpeed();
 		trackStage = 0;
-		spawnOnDeath = enemy.getSpawnOnDeath();
 		img = enemy.getImage();
 		world = enemy.getWorld();
 		loc = new Location(0, 8 * Constants.PIXELS_PER_SQUARE_VERT);
@@ -72,14 +68,6 @@ public class Enemy extends Entity {
 
 	public void settrackStage(int getTrackStage) {
 		this.trackStage = getTrackStage;
-	}
-
-	public Enemy getSpawnOnDeath() {
-		return spawnOnDeath;
-	}
-
-	public void setSpawnOnDeath(Enemy spawnOnDeath) {
-		this.spawnOnDeath = spawnOnDeath;
 	}
 
 	private void move() {
@@ -143,13 +131,12 @@ public class Enemy extends Entity {
 	}
 
 	private void die() {
-		if (spawnOnDeath != null)
-			world.addEnemy(new Enemy(spawnOnDeath));
 		world.removeEnemy(this);
 	}
 
 	private void reachGoal() {
 		world.removeEnemy(this);
+		world.takeLives(health);
 	}
 
 	private boolean nextMoveIsValid() {

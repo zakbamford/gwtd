@@ -14,8 +14,7 @@ public class WavePart implements ActionListener {
 	private Timer timer;
 
 	// Constructs a part of a wave with only one enemy type
-	public WavePart(int count, int ticksBetweenSpawn, int startTime,
-			Enemy refEnemy, World world) {
+	public WavePart(int count, int ticksBetweenSpawn, int startTime, Enemy refEnemy, World world) {
 		this.count = count;
 		this.ticksBetweenSpawn = ticksBetweenSpawn;
 		this.startTime = startTime;
